@@ -1,0 +1,4 @@
+So you are getting an input x to the key schedule K(x) based on x = 4*round + k for k=0,1,2,3. When you calculate K(x) for encryption, you rotate the key to the left by 1 and then calculate x mod 8. Since the key is 8 bytes, the key K can be written as k7 k6 k5 k4 k3 k2 k1 k0, where k0 is the lowest order byte of K, and k7 is the highest order byte. For instance if x mod 8 is 5, then k5 would be chosen as the subkey. So, K(x) = k5.
+
+First k0 = 0x89, k1 = 0x67, etc... then after one shift to the left, k0 = 0x13, k1 = 0xcf,... Then K(4*round + 0) = 0x13 since we start with round=0.
+Then after another shift k0 =  0x26, k1 = 0x9e..., and K(4*round + 1) = 0x9e. This continues till you get all 12 subkeys for each round

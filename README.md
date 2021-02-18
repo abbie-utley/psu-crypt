@@ -32,11 +32,11 @@ delivered to a file called **ciphertext.txt** and if you wish to use this file f
 The ciphertext will be displayed as a concatenation in case the plaintext was originally longer than 64 bits.
 6. The output will also be written to a file called **ciphertext.txt**. If one exists already, it will be rewritten.
 
-[^1]:`make` will also do this, since encrypt is the default
+[^1]: `make` will also do this, since encrypt is the default
 
-[^2]:A warning will show up on the first compilation, but will not show up later.
+[^2]: A warning will show up on the first compilation, but will not show up later.
 
-[^3]:For encryption, please note that HEX inputs that are more than 64 bits will only encrypt the first 64 bits. 
+[^3]: For encryption, please note that HEX inputs that are more than 64 bits will only encrypt the first 64 bits. 
 
 ---
 
@@ -60,9 +60,9 @@ delivered to a file called **plaintext.txt** and if you wish to use this file fo
 - please note that if what you are decrypting was originally in hex, and does not correspond with a hex value, it may look like garbage. - 
 6. The plaintext that was decrypted will be written to a file called **plaintext.txt**. If one exists already, it will be rewritten.
 
-[^1]:`make` will **not** run decryption. It has to be `make decrypt`.
+[^1]: `make` will **not** run decryption. It has to be `make decrypt`.
 
-[^2]:ciphertext input has to be separated into 64 bit blocks by a new line
+[^2]: ciphertext input has to be separated into 64 bit blocks by a new line
 
 ---
 

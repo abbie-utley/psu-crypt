@@ -84,7 +84,4 @@ int main(int argc, char* argv[])
     wholesched(entire_key, ciphertext, 'd');
   }
   free(buffer);
-
-
-
 }

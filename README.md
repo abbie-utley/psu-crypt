@@ -21,7 +21,7 @@ This section will describe how to build for encryption.
 Running `make clean` before anything else will get rid of the .o files, as well as the ciphertext.txt and plaintext.txt files.
 
 1. To encrypt, a file called **plaintext.txt** must exist in the directory. 
-2. Once it's there, run `make encrypt` to compile the program.<sup>[1](#FN1)</sup><sup>[2](#FN2)</sup>
+2. Once it's there, run `make encrypt` to compile the program.<sup>[1](#FN1)</sup> | <sup>[2](#FN2)</sup>
 3. To start the program, run the following command: `./encrypt key.txt plaintext.txt` 
 4. The files do not _have_ to be named accordingly, since this program uses the `argv` implementation. However, the output will be
 delivered to a file called **ciphertext.txt** and if you wish to use this file for decryption, remember that.

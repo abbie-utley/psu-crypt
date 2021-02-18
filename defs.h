@@ -12,16 +12,18 @@ unsigned char* F_table[16][16];
 unsigned int fvalues[2];
 
 //keyschedule.c
-int e_key_schedule(unsigned char *);
+int key_schedule(unsigned char *, char);
 int mod_func(int, int);
-void bit_rotation(unsigned char *);
+void bit_rotation_left(unsigned char *);
+void bit_rotation_right(unsigned char *);
 //implemented for debugging
 void display_keysched(void);
 
 //wholesched.c
-void wholesched(unsigned long, long unsigned int);
+void wholesched(unsigned long, long unsigned int, char);
 long unsigned int whiting(long unsigned int, long unsigned int);
-int count_bits(char*);
+long unsigned int convert_to_hex(char*);
+long unsigned int pad_zeroes(char*);
 
 //F_function.c
 void F_function(unsigned int, unsigned int, int);

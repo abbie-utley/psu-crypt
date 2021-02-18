@@ -15,11 +15,22 @@ int main(int argc, char* argv[])
   unsigned long entire_key;           //64 bit key
   int j = 7;                          //variable for placing things in byte arrayss
   long unsigned int plaintext;        //64 bit to hold plaintext
+  char *buffer;                       //buffer to put the whole thing in
+  long file_size;                     //file size
+  size_t result;                      //for reading in the whole file
+  int length;                         //for keeping track of how much plaintext there is
+  int temp;                           //for how many times to loop
+  char temp2[8];                      //to send through to get hex
+
 
   //opens the file to read only, and gets the key in
   FILE *fp = fopen(argv[1], "r");
   fscanf(fp, "%lx", &entire_key);
   fclose(fp);
+
+  //clear the ciphertext file
+  FILE *f = fopen("ciphertext.txt", "w");
+  fclose(f);
 
   //put entire_key into the byte array
   for(int i = 0; i < 8; ++i)
@@ -29,7 +40,7 @@ int main(int argc, char* argv[])
   }
 
   //first step is to implement the key schedule
-  if(e_key_schedule(key_og) < 0)
+  if(key_schedule(key_og, 'e') < 0)
   {
     printf("Key schedule failed");
     return 0;
@@ -38,48 +49,64 @@ int main(int argc, char* argv[])
 
   //loops through and encrypts a little at a time
   //opens the plaintext file to read only
-
-  /********************** CURRENTLY ATTEMPTING TO LOOP THROUGH THE PLAINTEXT ****************/
-/*  FILE *fp1 = fopen(argv[2], "rb");
+/**************The following code was borrowed from http://www.cplusplus.com/reference/cstdio/fread************************/
+  //the point of this is to read in the file and put it all in a buffer
+  FILE *fp1 = fopen(argv[2], "rb");
 
   if(fp1)
   {
-    fread(&plaintext, 8, 1, fp1);
-    wholesched(entire_key, plaintext);
-//    printf("%lx", plaintext);
-  }
-  fclose(fp1);
-*/
+    fseek(fp1, 0, SEEK_END);
+    file_size = ftell(fp1);
+    rewind(fp1);
 
-  /*if(fp1)
+    buffer = (char*)malloc(sizeof(char)*file_size);
+    if(buffer == NULL)
+      return -1;
+    result = fread(buffer, 1, file_size, fp1);
+    if(result != file_size)
+      return -1;
+  }
+/**************End of borrowed code*************************/
+  else
   {
-    do
+    perror("Cannot open file");
+    return -1;
+  }
+
+  //For readability purposes, the plaintext and key and ciphertext are all displayed here
+  //even though the ciphertext also gets written to a file
+  printf("plaintext: %s\nkey: %lx\nciphertext: ", buffer, entire_key);
+
+  //Check to see if the buffer starts with 0x
+  //if it does, it's hex and read it in as hex
+  if(buffer[0] == 48 && buffer[1] == 120)
+  {
+    rewind(fp1);
+    fscanf(fp1, "%lx", &plaintext);
+    wholesched(entire_key, plaintext, 'e');
+  }
+
+  //if it's not, read it in as plaintext, and convert to hex.
+  //Loop through to send it to the whole schedule 64 bits at a time
+  else
+  {
+    length = (strlen(buffer) - 1);
+    temp = length/8;
+    for(int i = 0; i < temp; ++i)
     {
-      plaintext = fgetc(fp1);
-      if(EOF != plaintext)
-      {
-        printf("%ld", plaintext);
-//        wholesched(entire_key, plaintext);
-      }
-    } while(EOF != plaintext);
-    fclose(fp1);
+      memcpy(temp2, (buffer+i), 8);
+      plaintext = convert_to_hex(temp2);
+      wholesched(entire_key, plaintext, 'e');
+    }
+    if(length % 8 != 0)
+    {
+      memcpy(temp2, (buffer+(temp*8)), 8);
+      plaintext = pad_zeroes(temp2);
+      wholesched(entire_key, plaintext, 'e');
+    }
   }
-  printf("\n");*/
-
-  
-
-/*  do
-  {
-    fscanf(fp1, "%lx\n", &plaintext);
-    printf("\n\n%lx\n\n", plaintext);
-    wholesched(entire_key, plaintext);
-  }
-  while(!feof(fp1));
+  printf("\n");
+  free(buffer);
   fclose(fp1);
-  */
-
-  //Afterwards it's all the same so all of the rest of it is going to go somewhere else
-  //maybe
-
 
 }

@@ -8,7 +8,7 @@ CC=gcc
 DFLAGS=-g
 
 #flag for warnings
-CFLAGS=-c -Wall
+CFLAGS=-c 
 
 #extra flags ig idk what LDflags are but oh well
 LDFLAGS=-g
@@ -17,7 +17,7 @@ LDFLAGS=-g
 SOURCES_ENC=main_enc.c keyschedule.c wholesched.c FandG_function.c ftable.c
 
 #source files for decryption
-SOURCES_DEC=main_dec.c
+SOURCES_DEC=main_dec.c keyschedule.c wholesched.c FandG_function.c ftable.c
 
 #object files for encryption
 OBJECTS_ENC=$(SOURCES_ENC:.c=.o)
@@ -42,4 +42,4 @@ $(EXEC_DEC): $(OBJECTS_DEC)
 	$(CC) $(CFLAGS) $(LDFLAGS) $< -o $@
 
 clean:
-	rm -f *.o ~*
+	rm -f ciphertext.txt plaintext.txt *.o ~*

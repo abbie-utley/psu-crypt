@@ -34,7 +34,7 @@ int key_schedule(unsigned char * og_key, char flag)
     }
   }
 
-  //display_keysched();
+  display_keysched();
 
 
   return 1;

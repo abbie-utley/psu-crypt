@@ -58,11 +58,13 @@ delivered to a file called **plaintext.txt** and if you wish to use this file fo
 * plaintext in hex
 * plaintext in ascii
 - please note that if what you are decrypting was originally in hex, and does not correspond with a hex value, it may look like garbage. - 
-6. The plaintext that was decrypted will be written to a file called **plaintext.txt**. If one exists already, it will be rewritten.
+6. The plaintext that was decrypted will be written to a file called **plaintext.txt**. If one exists already, it will be rewritten.<sup>[6](FN#6)</sup>
 
 <a name="FN4">4</a>: `make` will **not** run decryption. It has to be `make decrypt`.
 
 <a name="FN5">5</a>: ciphertext input has to be separated into 64 bit blocks by a new line
+
+<a name="FN6">6</a>: Even if your plaintext was encrypted as hex, it will be decrypted as plaintext in the file
 
 ---
 

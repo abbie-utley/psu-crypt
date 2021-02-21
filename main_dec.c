@@ -1,3 +1,4 @@
+//This file includes all things related to decryption - the key schedule implementation, as well as reading in ciphertext
 #include "defs.h"
 
 int main(int argc, char* argv[])
@@ -10,14 +11,14 @@ int main(int argc, char* argv[])
   }
 
   //variables
-  long unsigned int entire_key;
-  unsigned char key_og[8];
-  int j = 7;
-  long unsigned int ciphertext;
-  char * buffer;
-  int file_size;
-  size_t result;
-  int length;
+  long unsigned int entire_key;                     //64 bit variable to hold the whole key
+  unsigned char key_og[8];                          //byte array for each byte of the key
+  int j = 7;                                        //variable for placing things in byte arrays
+  long unsigned int ciphertext;                     //64 bit place holder for ciphertext
+  char * buffer;                                    //char buffer to read in ciphertext
+  int file_size;                                    //int for holding the size of the file
+  size_t result;                                    //for reading in the whole file
+  int length;                                       //for keeping track of how much ciphertext there is
 
   //opens the file to read only, and gets the key in
   FILE *fp = fopen(argv[1], "r");
@@ -68,6 +69,8 @@ int main(int argc, char* argv[])
     perror("cannot open file");
     return -1;
   }
+
+  //this part reads in the ciphertext one 64 bit block at a time
   length = strlen(buffer);
   length /= 16;
   char* ptr_start = buffer;
